@@ -91,4 +91,22 @@ public class TechnicalExaminationController {
 
     // GET technical examinations by sent for repair status
     @GetMapping("/sent-for-repair")
-    public ResponseEntity
+    public ResponseEntity<List<TechnicalExamination>> getTechnicalExaminationsByRepairStatus(@RequestParam Boolean sentForRepair) {
+        List<TechnicalExamination> examinations = technicalExaminationService.findBySentForRepair(sentForRepair);
+        return new ResponseEntity<>(examinations, HttpStatus.OK);
+    }
+
+    // GET technical examinations by repair price greater than
+    @GetMapping("/repair-price")
+    public ResponseEntity<List<TechnicalExamination>> getTechnicalExaminationsByRepairPriceGreaterThan(@RequestParam Double price) {
+        List<TechnicalExamination> examinations = technicalExaminationService.findByRepairPriceGreaterThan(price);
+        return new ResponseEntity<>(examinations, HttpStatus.OK);
+    }
+
+    // GET technical examinations by result containing
+    @GetMapping("/result")
+    public ResponseEntity<List<TechnicalExamination>> getTechnicalExaminationsByResultContaining(@RequestParam String keyword) {
+        List<TechnicalExamination> examinations = technicalExaminationService.findByExaminationResultContaining(keyword);
+        return new ResponseEntity<>(examinations, HttpStatus.OK);
+    }
+}
