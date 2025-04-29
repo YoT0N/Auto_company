@@ -1,72 +1,95 @@
 package edu.ilkiv.auto_company.service;
 
+import edu.ilkiv.auto_company.dto.BusDTO;
+import edu.ilkiv.auto_company.mappers.BusMapper;
 import edu.ilkiv.auto_company.model.Bus;
 import edu.ilkiv.auto_company.repository.BusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
+import org.springframework.validation.annotation.Validated;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Validated
 public class BusService {
 
     private final BusRepository busRepository;
+    private final BusMapper busMapper;
 
     @Autowired
-    public BusService(BusRepository busRepository) {
+    public BusService(BusRepository busRepository, BusMapper busMapper) {
         this.busRepository = busRepository;
+        this.busMapper = busMapper;
     }
 
-    public List<Bus> getAllBuses() {
-        return busRepository.findAll();
+    public List<BusDTO> getAllBuses() {
+        return busRepository.findAll().stream()
+                .map(busMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Bus> getBusById(String countryNumber) {
-        return busRepository.findById(countryNumber);
+    public Optional<BusDTO> getBusById(String countryNumber) {
+        return busRepository.findById(countryNumber)
+                .map(busMapper::toDto);
     }
 
-    public Bus saveBus(Bus bus) {
-        return busRepository.save(bus);
+    public BusDTO saveBus(@Valid BusDTO busDTO) {
+        Bus bus = busMapper.toEntity(busDTO);
+        Bus savedBus = busRepository.save(bus);
+        return busMapper.toDto(savedBus);
     }
 
     public void deleteBus(String countryNumber) {
         busRepository.deleteById(countryNumber);
     }
 
-    public List<Bus> findByBrand(String brand) {
-        return busRepository.findByBrand(brand);
+    public List<BusDTO> findByBrand(String brand) {
+        return busRepository.findByBrand(brand).stream()
+                .map(busMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<Bus> findByYearOfManufacture(Integer year) {
-        return busRepository.findByYearOfManufacture(year);
+    public List<BusDTO> findByYearOfManufacture(Integer year) {
+        return busRepository.findByYearOfManufacture(year).stream()
+                .map(busMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<Bus> findByDateOfReceiptBetween(LocalDate start, LocalDate end) {
-        return busRepository.findByDateOfReceiptBetween(start, end);
+    public List<BusDTO> findByDateOfReceiptBetween(LocalDate start, LocalDate end) {
+        return busRepository.findByDateOfReceiptBetween(start, end).stream()
+                .map(busMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<Bus> findActiveBuses() {
-        return busRepository.findByWriteoffDateIsNull();
+    public List<BusDTO> findActiveBuses() {
+        return busRepository.findByWriteoffDateIsNull().stream()
+                .map(busMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public boolean existsById(String countryNumber) {
         return busRepository.existsById(countryNumber);
     }
 
-    public Bus updateBus(String countryNumber, Bus busDetails) {
-        Bus bus = busRepository.findById(countryNumber)
-                .orElseThrow(() -> new RuntimeException("Bus not found with id: " + countryNumber));
+    public BusDTO updateBus(String countryNumber, @Valid BusDTO busDTO) {
+        if (!busRepository.existsById(countryNumber)) {
+            throw new RuntimeException("Bus not found with id: " + countryNumber);
+        }
 
-        bus.setBoardingNumber(busDetails.getBoardingNumber());
-        bus.setBrand(busDetails.getBrand());
-        bus.setPassengerCapacity(busDetails.getPassengerCapacity());
-        bus.setYearOfManufacture(busDetails.getYearOfManufacture());
-        bus.setMileage(busDetails.getMileage());
-        bus.setDateOfReceipt(busDetails.getDateOfReceipt());
-        bus.setWriteoffDate(busDetails.getWriteoffDate());
+        // Ensure the DTO has the correct ID before mapping
+        if (!countryNumber.equals(busDTO.getCountryNumber())) {
+            throw new ValidationException("Country number in path and request body must match");
+        }
 
-        return busRepository.save(bus);
+        Bus bus = busMapper.toEntity(busDTO);
+        Bus updatedBus = busRepository.save(bus);
+        return busMapper.toDto(updatedBus);
     }
 }

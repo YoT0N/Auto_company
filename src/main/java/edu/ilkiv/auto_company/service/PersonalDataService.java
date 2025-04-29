@@ -1,72 +1,95 @@
 package edu.ilkiv.auto_company.service;
 
-
+import edu.ilkiv.auto_company.dto.PersonalDataDTO;
+import edu.ilkiv.auto_company.mappers.PersonalDataMapper;
 import edu.ilkiv.auto_company.model.PersonalData;
 import edu.ilkiv.auto_company.repository.PersonalDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
+import org.springframework.validation.annotation.Validated;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Validated
 public class PersonalDataService {
 
     private final PersonalDataRepository personalDataRepository;
+    private final PersonalDataMapper personalDataMapper;
 
     @Autowired
-    public PersonalDataService(PersonalDataRepository personalDataRepository) {
+    public PersonalDataService(PersonalDataRepository personalDataRepository, PersonalDataMapper personalDataMapper) {
         this.personalDataRepository = personalDataRepository;
+        this.personalDataMapper = personalDataMapper;
     }
 
-    public List<PersonalData> getAllPersonalData() {
-        return personalDataRepository.findAll();
+    public List<PersonalDataDTO> getAllPersonalData() {
+        return personalDataRepository.findAll().stream()
+                .map(personalDataMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Optional<PersonalData> getPersonalDataById(String tabelNumber) {
-        return personalDataRepository.findById(tabelNumber);
+    public Optional<PersonalDataDTO> getPersonalDataById(String tabelNumber) {
+        return personalDataRepository.findById(tabelNumber)
+                .map(personalDataMapper::toDto);
     }
 
-    public PersonalData savePersonalData(PersonalData personalData) {
-        return personalDataRepository.save(personalData);
+    public PersonalDataDTO savePersonalData(@Valid PersonalDataDTO personalDataDTO) {
+        PersonalData personalData = personalDataMapper.toEntity(personalDataDTO);
+        PersonalData savedPersonalData = personalDataRepository.save(personalData);
+        return personalDataMapper.toDto(savedPersonalData);
     }
 
     public void deletePersonalData(String tabelNumber) {
         personalDataRepository.deleteById(tabelNumber);
     }
 
-    public List<PersonalData> findByFullNameContaining(String name) {
-        return personalDataRepository.findByFullNameContaining(name);
+    public List<PersonalDataDTO> findByFullNameContaining(String name) {
+        return personalDataRepository.findByFullNameContaining(name).stream()
+                .map(personalDataMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<PersonalData> findBySex(String sex) {
-        return personalDataRepository.findBySex(sex);
+    public List<PersonalDataDTO> findBySex(String sex) {
+        return personalDataRepository.findBySex(sex).stream()
+                .map(personalDataMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<PersonalData> findByDateOfBirthBefore(LocalDate date) {
-        return personalDataRepository.findByDateOfBirthBefore(date);
+    public List<PersonalDataDTO> findByDateOfBirthBefore(LocalDate date) {
+        return personalDataRepository.findByDateOfBirthBefore(date).stream()
+                .map(personalDataMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public List<PersonalData> findByHomeAddressContaining(String address) {
-        return personalDataRepository.findByHomeAddressContaining(address);
+    public List<PersonalDataDTO> findByHomeAddressContaining(String address) {
+        return personalDataRepository.findByHomeAddressContaining(address).stream()
+                .map(personalDataMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public boolean existsById(String tabelNumber) {
         return personalDataRepository.existsById(tabelNumber);
     }
 
-    public PersonalData updatePersonalData(String tabelNumber, PersonalData personalDataDetails) {
-        PersonalData personalData = personalDataRepository.findById(tabelNumber)
-                .orElseThrow(() -> new RuntimeException("Personal data not found with id: " + tabelNumber));
+    public PersonalDataDTO updatePersonalData(String tabelNumber, @Valid PersonalDataDTO personalDataDTO) {
+        if (!personalDataRepository.existsById(tabelNumber)) {
+            throw new RuntimeException("Personal data not found with id: " + tabelNumber);
+        }
 
-        personalData.setFullName(personalDataDetails.getFullName());
-        personalData.setDateOfBirth(personalDataDetails.getDateOfBirth());
-        personalData.setSex(personalDataDetails.getSex());
-        personalData.setHomeAddress(personalDataDetails.getHomeAddress());
-        personalData.setHomePhone(personalDataDetails.getHomePhone());
-        personalData.setPhoneNumber(personalDataDetails.getPhoneNumber());
+        // Ensure the DTO has the correct ID before mapping
+        if (!tabelNumber.equals(personalDataDTO.getTabelNumber())) {
+            throw new ValidationException("Tabel number in path and request body must match");
+        }
 
-        return personalDataRepository.save(personalData);
+        PersonalData personalData = personalDataMapper.toEntity(personalDataDTO);
+        PersonalData updatedPersonalData = personalDataRepository.save(personalData);
+        return personalDataMapper.toDto(updatedPersonalData);
     }
 }
