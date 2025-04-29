@@ -20,7 +20,7 @@ public class PersonnelCredentials {
 
     @OneToOne
     @MapsId
-    @JoinColumn(name = "tabel_number")
+    @JoinColumn(name = "tabel_number_fr")
     private PersonalData personalData;
 
     @Column(name = "position", nullable = false, length = 50)

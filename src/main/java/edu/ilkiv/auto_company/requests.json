@@ -1,0 +1,1042 @@
+{
+    "info": {
+        "_postman_id": "a1b2c3d4-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
+        "name": "TransportManagementSystem",
+        "description": "API collection for Transport Management System",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Buses",
+            "item": [
+                {
+                    "name": "Get All Buses",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses"
+                            ]
+                        },
+                        "description": "Retrieve all buses"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Bus by Country Number",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses/AA1234BB",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses",
+                                "AA1234BB"
+                            ]
+                        },
+                        "description": "Retrieve bus by country number"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Buses by Brand",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses/brand/Mercedes",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses",
+                                "brand",
+                                "Mercedes"
+                            ]
+                        },
+                        "description": "Retrieve buses by brand"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Buses by Receipt Date Range",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses/receipt-date?startDate=2023-01-01&endDate=2023-12-31",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses",
+                                "receipt-date"
+                            ],
+                            "query": [
+                                {
+                                    "key": "startDate",
+                                    "value": "2023-01-01"
+                                },
+                                {
+                                    "key": "endDate",
+                                    "value": "2023-12-31"
+                                }
+                            ]
+                        },
+                        "description": "Retrieve buses by receipt date range"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Bus",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"countryNumber\": \"AA9876ZZ\",\n    \"brand\": \"Volvo\",\n    \"model\": \"9900\",\n    \"yearOfManufacture\": 2022,\n    \"dateOfReceipt\": \"2023-05-15\",\n    \"initialCost\": 150000.00,\n    \"amortizationRate\": 15.0,\n    \"residualValue\": 135000.00,\n    \"technicalCondition\": \"Excellent\",\n    \"seatCapacity\": 50,\n    \"dateOfWriteOff\": null,\n    \"fuelConsumption\": 25.5\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses"
+                            ]
+                        },
+                        "description": "Create a new bus"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Bus",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"brand\": \"Volvo\",\n    \"model\": \"9900 XL\",\n    \"yearOfManufacture\": 2022,\n    \"dateOfReceipt\": \"2023-05-15\",\n    \"initialCost\": 150000.00,\n    \"amortizationRate\": 15.0,\n    \"residualValue\": 130000.00,\n    \"technicalCondition\": \"Good\",\n    \"seatCapacity\": 52,\n    \"dateOfWriteOff\": null,\n    \"fuelConsumption\": 26.0\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses/AA9876ZZ",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses",
+                                "AA9876ZZ"
+                            ]
+                        },
+                        "description": "Update an existing bus"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Bus",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/buses/AA9876ZZ",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "buses",
+                                "AA9876ZZ"
+                            ]
+                        },
+                        "description": "Delete a bus"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Keys",
+            "item": [
+                {
+                    "name": "Get All Keys",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/keys",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "keys"
+                            ]
+                        },
+                        "description": "Retrieve all keys"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Keys by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/keys/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "keys",
+                                "1"
+                            ]
+                        },
+                        "description": "Retrieve keys by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Keys by Login",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/keys/login/admin",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "keys",
+                                "login",
+                                "admin"
+                            ]
+                        },
+                        "description": "Retrieve keys by login"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Keys",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"login\": \"user123\",\n    \"password\": \"securePass456\",\n    \"role\": \"USER\",\n    \"tablename\": \"personal_data\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/keys",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "keys"
+                            ]
+                        },
+                        "description": "Create new keys"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Keys",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"login\": \"user123\",\n    \"password\": \"newSecurePass789\",\n    \"role\": \"MODERATOR\",\n    \"tablename\": \"personal_data\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/keys/2",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "keys",
+                                "2"
+                            ]
+                        },
+                        "description": "Update existing keys"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Keys",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/keys/3",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "keys",
+                                "3"
+                            ]
+                        },
+                        "description": "Delete keys"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Personnel",
+            "item": [
+                {
+                    "name": "Get All Personnel",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/personnel",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "personnel"
+                            ]
+                        },
+                        "description": "Retrieve all personnel"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Personnel by Tabel Number",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/personnel/D123456",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "personnel",
+                                "D123456"
+                            ]
+                        },
+                        "description": "Retrieve personnel by tabel number"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Personnel by Name",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/personnel/name/Smith",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "personnel",
+                                "name",
+                                "Smith"
+                            ]
+                        },
+                        "description": "Retrieve personnel by name"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Personnel",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"tabelNumber\": \"D789012\",\n    \"fullName\": \"John Johnson\",\n    \"sex\": \"Male\",\n    \"dateOfBirth\": \"1985-06-15\",\n    \"homeAddress\": \"123 Main St, Anytown\",\n    \"phoneNumber\": \"+380501234567\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/personnel",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "personnel"
+                            ]
+                        },
+                        "description": "Create new personnel"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Personnel",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"fullName\": \"John S. Johnson\",\n    \"sex\": \"Male\",\n    \"dateOfBirth\": \"1985-06-15\",\n    \"homeAddress\": \"456 Oak St, Anytown\",\n    \"phoneNumber\": \"+380501234599\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/personnel/D789012",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "personnel",
+                                "D789012"
+                            ]
+                        },
+                        "description": "Update existing personnel"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Personnel",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/personnel/D789012",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "personnel",
+                                "D789012"
+                            ]
+                        },
+                        "description": "Delete personnel"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Credentials",
+            "item": [
+                {
+                    "name": "Get All Credentials",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/credentials",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "credentials"
+                            ]
+                        },
+                        "description": "Retrieve all credentials"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Credentials by Tabel Number",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/credentials/D123456",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "credentials",
+                                "D123456"
+                            ]
+                        },
+                        "description": "Retrieve credentials by tabel number"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Credentials by Position",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/credentials/position/Driver",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "credentials",
+                                "position",
+                                "Driver"
+                            ]
+                        },
+                        "description": "Retrieve credentials by position"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Credentials",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"tabelNumber\": \"D789012\",\n    \"position\": \"Driver\",\n    \"salary\": 15000.00,\n    \"dateOfEmployment\": \"2022-03-15\",\n    \"education\": \"Professional\",\n    \"experience\": 5\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/credentials",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "credentials"
+                            ]
+                        },
+                        "description": "Create new credentials"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Credentials",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"position\": \"Senior Driver\",\n    \"salary\": 18000.00,\n    \"dateOfEmployment\": \"2022-03-15\",\n    \"education\": \"Professional\",\n    \"experience\": 6\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/credentials/D789012",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "credentials",
+                                "D789012"
+                            ]
+                        },
+                        "description": "Update existing credentials"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Credentials",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/credentials/D789012",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "credentials",
+                                "D789012"
+                            ]
+                        },
+                        "description": "Delete credentials"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "PhysicalExaminations",
+            "item": [
+                {
+                    "name": "Get All Physical Examinations",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/physical-examinations",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "physical-examinations"
+                            ]
+                        },
+                        "description": "Retrieve all physical examinations"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Physical Examination by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/physical-examinations/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "physical-examinations",
+                                "1"
+                            ]
+                        },
+                        "description": "Retrieve physical examination by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Physical Examinations by Personnel",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/physical-examinations/personnel/D123456",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "physical-examinations",
+                                "personnel",
+                                "D123456"
+                            ]
+                        },
+                        "description": "Retrieve physical examinations by personnel"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Physical Examination",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"personnel\": {\n        \"tabelNumber\": \"D123456\"\n    },\n    \"date\": \"2023-04-15\",\n    \"examinationResult\": \"Fit for duty\",\n    \"bloodPressure\": \"120/80\",\n    \"pulse\": 75,\n    \"doctorName\": \"Dr. Jane Smith\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/physical-examinations",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "physical-examinations"
+                            ]
+                        },
+                        "description": "Create new physical examination"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Physical Examination",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"personnel\": {\n        \"tabelNumber\": \"D123456\"\n    },\n    \"date\": \"2023-04-15\",\n    \"examinationResult\": \"Fit for duty with restrictions\",\n    \"bloodPressure\": \"130/85\",\n    \"pulse\": 78,\n    \"doctorName\": \"Dr. Jane Smith\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/physical-examinations/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "physical-examinations",
+                                "1"
+                            ]
+                        },
+                        "description": "Update existing physical examination"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Physical Examination",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/physical-examinations/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "physical-examinations",
+                                "1"
+                            ]
+                        },
+                        "description": "Delete physical examination"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Routes",
+            "item": [
+                {
+                    "name": "Get All Routes",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/routes",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "routes"
+                            ]
+                        },
+                        "description": "Retrieve all routes"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Route by Route Number",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/routes/123",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "routes",
+                                "123"
+                            ]
+                        },
+                        "description": "Retrieve route by route number"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Routes by Name",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/routes/search?keyword=Central",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "routes",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "keyword",
+                                    "value": "Central"
+                                }
+                            ]
+                        },
+                        "description": "Retrieve routes by name"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create Route",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"routeNumber\": \"456\",\n    \"routeName\": \"Airport Express\",\n    \"routeLength\": 18.5,\n    \"averageTime\": 45,\n    \"startPoint\": \"Central Station\",\n    \"endPoint\": \"Airport Terminal\",\n    \"stops\": 5\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/routes",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "routes"
+                            ]
+                        },
+                        "description": "Create new route"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Route",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"routeName\": \"Airport Express Plus\",\n    \"routeLength\": 19.0,\n    \"averageTime\": 42,\n    \"startPoint\": \"Central Station\",\n    \"endPoint\": \"Airport Terminal\",\n    \"stops\": 6\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:8080/api/routes/456",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "routes",
+                                "456"
+                            ]
+                        },
+                        "description": "Update existing route"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Route",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/routes/456",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "routes",
+                                "456"
+                            ]
+                        },
+                        "description": "Delete route"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "RouteSheets",
+            "item": [
+                {
+                    "name": "Get All Route Sheets",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/route-sheets",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "route-sheets"
+                            ]
+                        },
+                        "description": "Retrieve all route sheets"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Route Sheet by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/route-sheets/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "route-sheets",
+                                "1"
+                            ]
+                        },
+                        "description": "Retrieve route sheet by ID"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Route Sheets by Route",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:8080/api/route-sheets/route/123",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "8080",
+                            "path": [
+                                "api",
+                                "route-sheets",
+                                "route",
+                                "123"
+                            ]
+                        },
+                        "description": "Retrieve route sheets by route"
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ]
+}
