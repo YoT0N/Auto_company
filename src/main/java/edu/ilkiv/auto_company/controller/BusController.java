@@ -1,6 +1,6 @@
 package edu.ilkiv.auto_company.controller;
 
-import edu.ilkiv.auto_company.model.Bus;
+import edu.ilkiv.auto_company.dto.BusDTO;
 import edu.ilkiv.auto_company.service.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,14 +24,14 @@ public class BusController {
 
     // GET all buses
     @GetMapping
-    public ResponseEntity<List<Bus>> getAllBuses() {
-        List<Bus> buses = busService.getAllBuses();
+    public ResponseEntity<List<BusDTO>> getAllBuses() {
+        List<BusDTO> buses = busService.getAllBuses();
         return new ResponseEntity<>(buses, HttpStatus.OK);
     }
 
     // GET bus by country number
     @GetMapping("/{countryNumber}")
-    public ResponseEntity<Bus> getBusById(@PathVariable String countryNumber) {
+    public ResponseEntity<BusDTO> getBusById(@PathVariable String countryNumber) {
         return busService.getBusById(countryNumber)
                 .map(bus -> new ResponseEntity<>(bus, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -39,22 +39,22 @@ public class BusController {
 
     // POST new bus
     @PostMapping
-    public ResponseEntity<Bus> createBus(@RequestBody Bus bus) {
-        if (busService.existsById(bus.getCountryNumber())) {
+    public ResponseEntity<BusDTO> createBus(@RequestBody BusDTO busDTO) {
+        if (busService.existsById(busDTO.getCountryNumber())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        Bus savedBus = busService.saveBus(bus);
+        BusDTO savedBus = busService.saveBus(busDTO);
         return new ResponseEntity<>(savedBus, HttpStatus.CREATED);
     }
 
     // PUT update bus
     @PutMapping("/{countryNumber}")
-    public ResponseEntity<Bus> updateBus(@PathVariable String countryNumber, @RequestBody Bus bus) {
+    public ResponseEntity<BusDTO> updateBus(@PathVariable String countryNumber, @RequestBody BusDTO busDTO) {
         if (!busService.existsById(countryNumber)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        bus.setCountryNumber(countryNumber); // Ensure the ID matches
-        Bus updatedBus = busService.updateBus(countryNumber, bus);
+        busDTO.setCountryNumber(countryNumber); // Ensure the ID matches
+        BusDTO updatedBus = busService.updateBus(countryNumber, busDTO);
         return new ResponseEntity<>(updatedBus, HttpStatus.OK);
     }
 
@@ -70,31 +70,31 @@ public class BusController {
 
     // GET buses by brand
     @GetMapping("/brand/{brand}")
-    public ResponseEntity<List<Bus>> getBusesByBrand(@PathVariable String brand) {
-        List<Bus> buses = busService.findByBrand(brand);
+    public ResponseEntity<List<BusDTO>> getBusesByBrand(@PathVariable String brand) {
+        List<BusDTO> buses = busService.findByBrand(brand);
         return new ResponseEntity<>(buses, HttpStatus.OK);
     }
 
     // GET buses by year of manufacture
     @GetMapping("/year/{year}")
-    public ResponseEntity<List<Bus>> getBusesByYear(@PathVariable Integer year) {
-        List<Bus> buses = busService.findByYearOfManufacture(year);
+    public ResponseEntity<List<BusDTO>> getBusesByYear(@PathVariable Integer year) {
+        List<BusDTO> buses = busService.findByYearOfManufacture(year);
         return new ResponseEntity<>(buses, HttpStatus.OK);
     }
 
     // GET buses by date of receipt range
     @GetMapping("/receipt-date")
-    public ResponseEntity<List<Bus>> getBusesByReceiptDateRange(
+    public ResponseEntity<List<BusDTO>> getBusesByReceiptDateRange(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        List<Bus> buses = busService.findByDateOfReceiptBetween(startDate, endDate);
+        List<BusDTO> buses = busService.findByDateOfReceiptBetween(startDate, endDate);
         return new ResponseEntity<>(buses, HttpStatus.OK);
     }
 
     // GET active buses (not written off)
     @GetMapping("/active")
-    public ResponseEntity<List<Bus>> getActiveBuses() {
-        List<Bus> buses = busService.findActiveBuses();
+    public ResponseEntity<List<BusDTO>> getActiveBuses() {
+        List<BusDTO> buses = busService.findActiveBuses();
         return new ResponseEntity<>(buses, HttpStatus.OK);
     }
 }

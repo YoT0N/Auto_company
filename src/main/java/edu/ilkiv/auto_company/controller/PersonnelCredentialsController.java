@@ -1,6 +1,6 @@
 package edu.ilkiv.auto_company.controller;
 
-import edu.ilkiv.auto_company.model.PersonnelCredentials;
+import edu.ilkiv.auto_company.dto.PersonnelCredentialsDTO;
 import edu.ilkiv.auto_company.service.PersonnelCredentialsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,14 +24,14 @@ public class PersonnelCredentialsController {
 
     // GET all credentials
     @GetMapping
-    public ResponseEntity<List<PersonnelCredentials>> getAllCredentials() {
-        List<PersonnelCredentials> credentials = personnelCredentialsService.getAllPersonnelCredentials();
+    public ResponseEntity<List<PersonnelCredentialsDTO>> getAllCredentials() {
+        List<PersonnelCredentialsDTO> credentials = personnelCredentialsService.getAllPersonnelCredentials();
         return new ResponseEntity<>(credentials, HttpStatus.OK);
     }
 
     // GET credentials by tabel number
     @GetMapping("/{tabelNumber}")
-    public ResponseEntity<PersonnelCredentials> getCredentialsById(@PathVariable String tabelNumber) {
+    public ResponseEntity<PersonnelCredentialsDTO> getCredentialsById(@PathVariable String tabelNumber) {
         return personnelCredentialsService.getPersonnelCredentialsById(tabelNumber)
                 .map(credentials -> new ResponseEntity<>(credentials, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -39,22 +39,22 @@ public class PersonnelCredentialsController {
 
     // POST new credentials
     @PostMapping
-    public ResponseEntity<PersonnelCredentials> createCredentials(@RequestBody PersonnelCredentials personnelCredentials) {
-        if (personnelCredentialsService.existsById(personnelCredentials.getTabelNumber())) {
+    public ResponseEntity<PersonnelCredentialsDTO> createCredentials(@RequestBody PersonnelCredentialsDTO personnelCredentialsDTO) {
+        if (personnelCredentialsService.existsById(personnelCredentialsDTO.getTabelNumber())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        PersonnelCredentials savedCredentials = personnelCredentialsService.savePersonnelCredentials(personnelCredentials);
+        PersonnelCredentialsDTO savedCredentials = personnelCredentialsService.savePersonnelCredentials(personnelCredentialsDTO);
         return new ResponseEntity<>(savedCredentials, HttpStatus.CREATED);
     }
 
     // PUT update credentials
     @PutMapping("/{tabelNumber}")
-    public ResponseEntity<PersonnelCredentials> updateCredentials(@PathVariable String tabelNumber, @RequestBody PersonnelCredentials personnelCredentials) {
+    public ResponseEntity<PersonnelCredentialsDTO> updateCredentials(@PathVariable String tabelNumber, @RequestBody PersonnelCredentialsDTO personnelCredentialsDTO) {
         if (!personnelCredentialsService.existsById(tabelNumber)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        personnelCredentials.setTabelNumber(tabelNumber); // Ensure the ID matches
-        PersonnelCredentials updatedCredentials = personnelCredentialsService.updatePersonnelCredentials(tabelNumber, personnelCredentials);
+        personnelCredentialsDTO.setTabelNumber(tabelNumber); // Ensure the ID matches
+        PersonnelCredentialsDTO updatedCredentials = personnelCredentialsService.updatePersonnelCredentials(tabelNumber, personnelCredentialsDTO);
         return new ResponseEntity<>(updatedCredentials, HttpStatus.OK);
     }
 
@@ -70,25 +70,25 @@ public class PersonnelCredentialsController {
 
     // GET credentials by position
     @GetMapping("/position/{position}")
-    public ResponseEntity<List<PersonnelCredentials>> getCredentialsByPosition(@PathVariable String position) {
-        List<PersonnelCredentials> credentials = personnelCredentialsService.findByPosition(position);
+    public ResponseEntity<List<PersonnelCredentialsDTO>> getCredentialsByPosition(@PathVariable String position) {
+        List<PersonnelCredentialsDTO> credentials = personnelCredentialsService.findByPosition(position);
         return new ResponseEntity<>(credentials, HttpStatus.OK);
     }
 
     // GET credentials by employment date before
     @GetMapping("/employed-before")
-    public ResponseEntity<List<PersonnelCredentials>> getCredentialsEmployedBefore(
+    public ResponseEntity<List<PersonnelCredentialsDTO>> getCredentialsEmployedBefore(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<PersonnelCredentials> credentials = personnelCredentialsService.findByDateOfEmploymentBefore(date);
+        List<PersonnelCredentialsDTO> credentials = personnelCredentialsService.findByDateOfEmploymentBefore(date);
         return new ResponseEntity<>(credentials, HttpStatus.OK);
     }
 
     // GET credentials by employment date range
     @GetMapping("/employed-between")
-    public ResponseEntity<List<PersonnelCredentials>> getCredentialsEmployedBetween(
+    public ResponseEntity<List<PersonnelCredentialsDTO>> getCredentialsEmployedBetween(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
-        List<PersonnelCredentials> credentials = personnelCredentialsService.findByDateOfEmploymentBetween(startDate, endDate);
+        List<PersonnelCredentialsDTO> credentials = personnelCredentialsService.findByDateOfEmploymentBetween(startDate, endDate);
         return new ResponseEntity<>(credentials, HttpStatus.OK);
     }
 }

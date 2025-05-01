@@ -1,6 +1,6 @@
 package edu.ilkiv.auto_company.controller;
 
-import edu.ilkiv.auto_company.model.Keys;
+import edu.ilkiv.auto_company.dto.KeysDTO;
 import edu.ilkiv.auto_company.service.KeysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +22,14 @@ public class KeysController {
 
     // GET all keys
     @GetMapping
-    public ResponseEntity<List<Keys>> getAllKeys() {
-        List<Keys> keys = keysService.getAllKeys();
+    public ResponseEntity<List<KeysDTO>> getAllKeys() {
+        List<KeysDTO> keys = keysService.getAllKeys();
         return new ResponseEntity<>(keys, HttpStatus.OK);
     }
 
     // GET keys by id
     @GetMapping("/{id}")
-    public ResponseEntity<Keys> getKeysById(@PathVariable Long id) {
+    public ResponseEntity<KeysDTO> getKeysById(@PathVariable Long id) {
         return keysService.getKeysById(id)
                 .map(keys -> new ResponseEntity<>(keys, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -37,7 +37,7 @@ public class KeysController {
 
     // GET keys by login
     @GetMapping("/login/{login}")
-    public ResponseEntity<Keys> getKeysByLogin(@PathVariable String login) {
+    public ResponseEntity<KeysDTO> getKeysByLogin(@PathVariable String login) {
         return keysService.findByLogin(login)
                 .map(keys -> new ResponseEntity<>(keys, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -45,19 +45,19 @@ public class KeysController {
 
     // POST new keys
     @PostMapping
-    public ResponseEntity<Keys> createKeys(@RequestBody Keys keys) {
-        Keys savedKeys = keysService.saveKeys(keys);
+    public ResponseEntity<KeysDTO> createKeys(@RequestBody KeysDTO keysDTO) {
+        KeysDTO savedKeys = keysService.saveKeys(keysDTO);
         return new ResponseEntity<>(savedKeys, HttpStatus.CREATED);
     }
 
     // PUT update keys
     @PutMapping("/{id}")
-    public ResponseEntity<Keys> updateKeys(@PathVariable Long id, @RequestBody Keys keys) {
+    public ResponseEntity<KeysDTO> updateKeys(@PathVariable Long id, @RequestBody KeysDTO keysDTO) {
         if (!keysService.existsById(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        keys.setIdKeys(id); // Ensure the ID matches
-        Keys updatedKeys = keysService.updateKeys(id, keys);
+        keysDTO.setIdKeys(id); // Ensure the ID matches
+        KeysDTO updatedKeys = keysService.updateKeys(id, keysDTO);
         return new ResponseEntity<>(updatedKeys, HttpStatus.OK);
     }
 
@@ -73,15 +73,15 @@ public class KeysController {
 
     // GET keys by role
     @GetMapping("/role/{role}")
-    public ResponseEntity<List<Keys>> getKeysByRole(@PathVariable String role) {
-        List<Keys> keys = keysService.findByRole(role);
+    public ResponseEntity<List<KeysDTO>> getKeysByRole(@PathVariable String role) {
+        List<KeysDTO> keys = keysService.findByRole(role);
         return new ResponseEntity<>(keys, HttpStatus.OK);
     }
 
     // GET keys by tablename
     @GetMapping("/tablename/{tablename}")
-    public ResponseEntity<List<Keys>> getKeysByTablename(@PathVariable String tablename) {
-        List<Keys> keys = keysService.findByTablenameEquals(tablename);
+    public ResponseEntity<List<KeysDTO>> getKeysByTablename(@PathVariable String tablename) {
+        List<KeysDTO> keys = keysService.findByTablenameEquals(tablename);
         return new ResponseEntity<>(keys, HttpStatus.OK);
     }
 }
