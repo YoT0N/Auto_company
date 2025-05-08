@@ -2,6 +2,7 @@ package edu.ilkiv.auto_company.controller;
 
 import edu.ilkiv.auto_company.dto.BusDTO;
 import edu.ilkiv.auto_company.service.BusService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class BusController {
 
     // POST new bus
     @PostMapping
-    public ResponseEntity<BusDTO> createBus(@RequestBody BusDTO busDTO) {
+    public ResponseEntity<BusDTO> createBus(@Valid @RequestBody BusDTO busDTO) {
         if (busService.existsById(busDTO.getCountryNumber())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -49,7 +50,7 @@ public class BusController {
 
     // PUT update bus
     @PutMapping("/{countryNumber}")
-    public ResponseEntity<BusDTO> updateBus(@PathVariable String countryNumber, @RequestBody BusDTO busDTO) {
+    public ResponseEntity<BusDTO> updateBus(@PathVariable String countryNumber,@Valid @RequestBody BusDTO busDTO) {
         if (!busService.existsById(countryNumber)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

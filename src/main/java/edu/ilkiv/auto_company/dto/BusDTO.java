@@ -1,8 +1,6 @@
 package edu.ilkiv.auto_company.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
@@ -12,6 +10,8 @@ import edu.ilkiv.auto_company.validation.ValidBus;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @ValidBus
 public class BusDTO {
 

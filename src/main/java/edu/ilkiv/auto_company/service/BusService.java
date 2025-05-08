@@ -4,6 +4,8 @@ import edu.ilkiv.auto_company.dto.BusDTO;
 import edu.ilkiv.auto_company.mappers.BusMapper;
 import edu.ilkiv.auto_company.model.Bus;
 import edu.ilkiv.auto_company.repository.BusRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
 @Service
 @Validated
 public class BusService {
+
+
+    private static final Logger logger = LoggerFactory.getLogger(BusService.class);
 
     private final BusRepository busRepository;
     private final BusMapper busMapper;
@@ -40,7 +45,9 @@ public class BusService {
                 .map(busMapper::toDto);
     }
 
-    public BusDTO saveBus(@Valid BusDTO busDTO) {
+    public BusDTO saveBus( BusDTO busDTO) {
+        logger.info("Saving new bus with name: {}", busDTO.getBrand());
+
         Bus bus = busMapper.toEntity(busDTO);
         Bus savedBus = busRepository.save(bus);
         return busMapper.toDto(savedBus);
@@ -78,7 +85,7 @@ public class BusService {
         return busRepository.existsById(countryNumber);
     }
 
-    public BusDTO updateBus(String countryNumber, @Valid BusDTO busDTO) {
+    public BusDTO updateBus(String countryNumber, BusDTO busDTO) {
         if (!busRepository.existsById(countryNumber)) {
             throw new RuntimeException("Bus not found with id: " + countryNumber);
         }

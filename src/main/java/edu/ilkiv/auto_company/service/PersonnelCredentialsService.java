@@ -73,7 +73,7 @@ public class PersonnelCredentialsService {
         return personnelCredentialsRepository.existsById(tabelNumber);
     }
 
-    public PersonnelCredentialsDTO updatePersonnelCredentials(String tabelNumber, @Valid PersonnelCredentialsDTO personnelCredentialsDTO) {
+    public PersonnelCredentialsDTO updatePersonnelCredentials(String tabelNumber, PersonnelCredentialsDTO personnelCredentialsDTO) {
         if (!personnelCredentialsRepository.existsById(tabelNumber)) {
             throw new RuntimeException("Personnel credentials not found with id: " + tabelNumber);
         }

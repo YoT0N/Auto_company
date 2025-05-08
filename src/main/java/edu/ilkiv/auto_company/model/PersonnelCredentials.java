@@ -16,11 +16,11 @@ public class PersonnelCredentials {
 
     @Id
     @Column(name = "tabel_number", length = 20)
-    private String tabelNumber;  // Primary key - табельний номер
+    private String tabelNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @MapsId
-    @JoinColumn(name = "tabel_number_fr")
+    @JoinColumn(name = "tabel_number")
     private PersonalData personalData;
 
     @Column(name = "position", nullable = false, length = 50)

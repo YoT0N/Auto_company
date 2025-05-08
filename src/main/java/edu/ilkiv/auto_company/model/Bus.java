@@ -41,9 +41,9 @@ public class Bus {
     @Column(name = "writeoff_date")
     private LocalDate writeoffDate;  // дата списання
 
-    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
-    private List<RouteSheet> routeSheets;
-
-    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
-    private List<TechnicalExamination> technicalExaminations;
+//    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
+//    private List<RouteSheet> routeSheets;
+//
+//    @OneToMany(mappedBy = "bus", cascade = CascadeType.ALL)
+//    private List<TechnicalExamination> technicalExaminations;
 }

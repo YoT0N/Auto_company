@@ -51,10 +51,6 @@ public class PersonalDataMapper implements EntityMapper<PersonalDataDTO, Persona
         dto.setHomePhone(entity.getHomePhone());
         dto.setPhoneNumber(entity.getPhoneNumber());
 
-        // Додаємо credentials якщо вони є
-        if (entity.getPersonnelCredentials() != null) {
-            dto.setPersonnelCredentials(personnelCredentialsMapper.toDto(entity.getPersonnelCredentials()));
-        }
 
         return dto;
     }

@@ -2,6 +2,7 @@ package edu.ilkiv.auto_company.controller;
 
 import edu.ilkiv.auto_company.dto.PersonnelCredentialsDTO;
 import edu.ilkiv.auto_company.service.PersonnelCredentialsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -49,7 +50,7 @@ public class PersonnelCredentialsController {
 
     // PUT update credentials
     @PutMapping("/{tabelNumber}")
-    public ResponseEntity<PersonnelCredentialsDTO> updateCredentials(@PathVariable String tabelNumber, @RequestBody PersonnelCredentialsDTO personnelCredentialsDTO) {
+    public ResponseEntity<PersonnelCredentialsDTO> updateCredentials(@Valid @PathVariable String tabelNumber, @RequestBody PersonnelCredentialsDTO personnelCredentialsDTO) {
         if (!personnelCredentialsService.existsById(tabelNumber)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

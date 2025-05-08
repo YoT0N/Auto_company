@@ -40,7 +40,7 @@ public class PersonalDataService {
                 .map(personalDataMapper::toDto);
     }
 
-    public PersonalDataDTO savePersonalData(@Valid PersonalDataDTO personalDataDTO) {
+    public PersonalDataDTO savePersonalData(PersonalDataDTO personalDataDTO) {
         PersonalData personalData = personalDataMapper.toEntity(personalDataDTO);
         PersonalData savedPersonalData = personalDataRepository.save(personalData);
         return personalDataMapper.toDto(savedPersonalData);

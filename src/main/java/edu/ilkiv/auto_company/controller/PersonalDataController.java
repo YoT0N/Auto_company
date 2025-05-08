@@ -2,6 +2,7 @@ package edu.ilkiv.auto_company.controller;
 
 import edu.ilkiv.auto_company.dto.PersonalDataDTO;
 import edu.ilkiv.auto_company.service.PersonalDataService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class PersonalDataController {
 
     // POST new personnel
     @PostMapping
-    public ResponseEntity<PersonalDataDTO> createPersonnel(@RequestBody PersonalDataDTO personalDataDTO) {
+    public ResponseEntity<PersonalDataDTO> createPersonnel(@Valid @RequestBody PersonalDataDTO personalDataDTO) {
         if (personalDataService.existsById(personalDataDTO.getTabelNumber())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
