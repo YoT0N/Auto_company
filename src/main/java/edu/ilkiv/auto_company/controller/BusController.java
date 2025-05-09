@@ -1,6 +1,7 @@
 package edu.ilkiv.auto_company.controller;
 
 import edu.ilkiv.auto_company.dto.BusDTO;
+import edu.ilkiv.auto_company.exeptions.ResourceNotFoundException;
 import edu.ilkiv.auto_company.service.BusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,8 @@ public class BusController {
     // GET bus by country number
     @GetMapping("/{countryNumber}")
     public ResponseEntity<BusDTO> getBusById(@PathVariable String countryNumber) {
-        return busService.getBusById(countryNumber)
-                .map(bus -> new ResponseEntity<>(bus, HttpStatus.OK))
-                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return ResponseEntity.ok(busService.getBusById(countryNumber)
+                .orElseThrow(() -> new ResourceNotFoundException("Bus", "countryNumber", countryNumber)));
     }
 
     // POST new bus

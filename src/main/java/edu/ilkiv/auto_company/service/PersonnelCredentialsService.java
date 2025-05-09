@@ -2,7 +2,9 @@ package edu.ilkiv.auto_company.service;
 
 import edu.ilkiv.auto_company.dto.PersonnelCredentialsDTO;
 import edu.ilkiv.auto_company.mappers.PersonnelCredentialsMapper;
+import edu.ilkiv.auto_company.model.PersonalData;
 import edu.ilkiv.auto_company.model.PersonnelCredentials;
+import edu.ilkiv.auto_company.repository.PersonalDataRepository;
 import edu.ilkiv.auto_company.repository.PersonnelCredentialsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +19,46 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Validated
 public class PersonnelCredentialsService {
 
     private final PersonnelCredentialsRepository personnelCredentialsRepository;
     private final PersonnelCredentialsMapper personnelCredentialsMapper;
+    private final PersonalDataRepository personalDataRepository;
 
     @Autowired
-    public PersonnelCredentialsService(PersonnelCredentialsRepository personnelCredentialsRepository,
-                                       PersonnelCredentialsMapper personnelCredentialsMapper) {
+    public PersonnelCredentialsService(
+            PersonnelCredentialsRepository personnelCredentialsRepository,
+            PersonnelCredentialsMapper personnelCredentialsMapper,
+            PersonalDataRepository personalDataRepository) {
         this.personnelCredentialsRepository = personnelCredentialsRepository;
         this.personnelCredentialsMapper = personnelCredentialsMapper;
+        this.personalDataRepository = personalDataRepository;
+    }
+
+    public PersonnelCredentialsDTO savePersonnelCredentials(@Valid PersonnelCredentialsDTO dto) {
+        // 1. Перевіряємо чи існує PersonalData
+        PersonalData personalData = personalDataRepository.findById(dto.getTabelNumber())
+                .orElseThrow(() -> new RuntimeException("PersonalData not found"));
+
+        // 2. Перевіряємо чи credentials ще не існують
+        if (personnelCredentialsRepository.existsById(dto.getTabelNumber())) {
+            throw new RuntimeException("Credentials already exist");
+        }
+
+        // 3. Створюємо нові credentials
+        PersonnelCredentials credentials = new PersonnelCredentials();
+        credentials.setPersonalData(personalData);
+        credentials.setPosition(dto.getPosition());
+        credentials.setDateOfEmployment(dto.getDateOfEmployment());
+
+        // 4. Зберігаємо (не використовуємо mapper, щоб уникнути проблем)
+        PersonnelCredentials saved = personnelCredentialsRepository.save(credentials);
+
+        return new PersonnelCredentialsDTO(
+                saved.getTabelNumber(),
+                saved.getPosition(),
+                saved.getDateOfEmployment()
+        );
     }
 
     public List<PersonnelCredentialsDTO> getAllPersonnelCredentials() {
@@ -41,11 +72,6 @@ public class PersonnelCredentialsService {
                 .map(personnelCredentialsMapper::toDto);
     }
 
-    public PersonnelCredentialsDTO savePersonnelCredentials(@Valid PersonnelCredentialsDTO personnelCredentialsDTO) {
-        PersonnelCredentials personnelCredentials = personnelCredentialsMapper.toEntity(personnelCredentialsDTO);
-        PersonnelCredentials savedPersonnelCredentials = personnelCredentialsRepository.save(personnelCredentials);
-        return personnelCredentialsMapper.toDto(savedPersonnelCredentials);
-    }
 
     public void deletePersonnelCredentials(String tabelNumber) {
         personnelCredentialsRepository.deleteById(tabelNumber);

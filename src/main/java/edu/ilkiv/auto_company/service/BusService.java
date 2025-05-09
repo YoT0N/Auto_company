@@ -1,6 +1,7 @@
 package edu.ilkiv.auto_company.service;
 
 import edu.ilkiv.auto_company.dto.BusDTO;
+import edu.ilkiv.auto_company.exeptions.ResourceNotFoundException;
 import edu.ilkiv.auto_company.mappers.BusMapper;
 import edu.ilkiv.auto_company.model.Bus;
 import edu.ilkiv.auto_company.repository.BusRepository;
@@ -8,9 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import edu.ilkiv.auto_company.exeptions.ValidationException;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
@@ -87,7 +87,8 @@ public class BusService {
 
     public BusDTO updateBus(String countryNumber, BusDTO busDTO) {
         if (!busRepository.existsById(countryNumber)) {
-            throw new RuntimeException("Bus not found with id: " + countryNumber);
+           throw new ResourceNotFoundException("Bus not found with id", "countryNumber", countryNumber);
+           // throw new RuntimeException("Bus not found with id: " + countryNumber);
         }
 
         // Ensure the DTO has the correct ID before mapping

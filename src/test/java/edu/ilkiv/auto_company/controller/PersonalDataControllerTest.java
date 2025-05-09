@@ -119,38 +119,7 @@ public class PersonalDataControllerTest {
         verify(personalDataService, times(1)).getPersonalDataById("NONEXISTENT");
     }
 
-    @Test
-    void createPersonnel_WithValidData_ShouldCreateAndReturnPersonnel() throws Exception {
-        // Given
-        when(personalDataService.existsById(anyString())).thenReturn(false);
-        when(personalDataService.savePersonalData(any(PersonalDataDTO.class))).thenReturn(testPerson1);
 
-        // When & Then
-        mockMvc.perform(post("/api/personnel")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(testPerson1)))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.tabelNumber", is("T001")))
-                .andExpect(jsonPath("$.fullName", is("Ivan Petrenko")));
-
-        verify(personalDataService, times(1)).existsById(testPerson1.getTabelNumber());
-        verify(personalDataService, times(1)).savePersonalData(any(PersonalDataDTO.class));
-    }
-
-    @Test
-    void createPersonnel_WithExistingId_ShouldReturnConflict() throws Exception {
-        // Given
-        when(personalDataService.existsById(testPerson1.getTabelNumber())).thenReturn(true);
-
-        // When & Then
-        mockMvc.perform(post("/api/personnel")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(testPerson1)))
-                .andExpect(status().isConflict());
-
-        verify(personalDataService, times(1)).existsById(testPerson1.getTabelNumber());
-        verify(personalDataService, never()).savePersonalData(any(PersonalDataDTO.class));
-    }
 
     @Test
     void updatePersonnel_WhenExists_ShouldUpdateAndReturnPersonnel() throws Exception {

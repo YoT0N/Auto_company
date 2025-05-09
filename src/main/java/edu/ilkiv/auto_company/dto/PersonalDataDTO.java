@@ -25,7 +25,7 @@ public class PersonalDataDTO {
 
     @NotNull(message = "Дата народження обов'язкова")
     @Past(message = "Дата народження має бути у минулому")
-    //@ValidDriverAge(message = "Вік працівника має бути не менше 21 року для водіїв")
+    @ValidDriverAge(message = "Вік працівника має бути не менше 21 року для водіїв")
     private LocalDate dateOfBirth;
 
     @NotBlank(message = "Стать не може бути порожньою")
@@ -42,6 +42,4 @@ public class PersonalDataDTO {
     @Pattern(regexp = "^\\+380\\d{9}$", message = "Номер телефону має бути у форматі +380XXXXXXXXX")
     private String phoneNumber;
 
-    // Зв'язані сутності
-    private PersonnelCredentialsDTO personnelCredentials;
 }

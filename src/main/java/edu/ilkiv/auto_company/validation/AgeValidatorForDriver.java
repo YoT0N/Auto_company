@@ -16,7 +16,7 @@ class AgeValidatorForDriver implements ConstraintValidator<ValidDriverAge, Local
     @Override
     public boolean isValid(LocalDate birthDate, ConstraintValidatorContext context) {
         if (birthDate == null) {
-            return true; // Let @NotNull handle this
+            return true;
         }
         return birthDate.plusYears(minAge).isBefore(LocalDate.now());
     }

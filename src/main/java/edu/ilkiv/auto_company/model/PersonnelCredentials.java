@@ -15,17 +15,16 @@ import java.time.LocalDate;
 public class PersonnelCredentials {
 
     @Id
-    @Column(name = "tabel_number", length = 20)
-    private String tabelNumber;
+    private String tabelNumber; // Не потрібно @Column, бо він буде такий самий як у PersonalData
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "tabel_number")
     private PersonalData personalData;
 
-    @Column(name = "position", nullable = false, length = 50)
-    private String position;  // посада
+    @Column(nullable = false, length = 50)
+    private String position;
 
-    @Column(name = "date_of_employment", nullable = false)
-    private LocalDate dateOfEmployment;  // дата працевлаштування
+    @Column(nullable = false)
+    private LocalDate dateOfEmployment;
 }

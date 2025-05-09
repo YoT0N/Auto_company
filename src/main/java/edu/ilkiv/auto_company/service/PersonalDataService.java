@@ -78,7 +78,7 @@ public class PersonalDataService {
         return personalDataRepository.existsById(tabelNumber);
     }
 
-    public PersonalDataDTO updatePersonalData(String tabelNumber, @Valid PersonalDataDTO personalDataDTO) {
+    public PersonalDataDTO updatePersonalData(String tabelNumber, PersonalDataDTO personalDataDTO) {
         if (!personalDataRepository.existsById(tabelNumber)) {
             throw new RuntimeException("Personal data not found with id: " + tabelNumber);
         }

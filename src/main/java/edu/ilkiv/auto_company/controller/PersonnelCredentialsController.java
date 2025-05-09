@@ -40,7 +40,7 @@ public class PersonnelCredentialsController {
 
     // POST new credentials
     @PostMapping
-    public ResponseEntity<PersonnelCredentialsDTO> createCredentials(@RequestBody PersonnelCredentialsDTO personnelCredentialsDTO) {
+    public ResponseEntity<PersonnelCredentialsDTO> createCredentials(@Valid @RequestBody PersonnelCredentialsDTO personnelCredentialsDTO) {
         if (personnelCredentialsService.existsById(personnelCredentialsDTO.getTabelNumber())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

@@ -11,7 +11,7 @@ class DifferentPersonnelValidator implements ConstraintValidator<DifferentPerson
     @Override
     public boolean isValid(RouteSheetDTO routeSheet, ConstraintValidatorContext context) {
         if (routeSheet == null || routeSheet.getDriverTabelNumber() == null || routeSheet.getConductorTabelNumber() == null) {
-            return true; // Let @NotNull handle this
+            return true;
         }
 
         return !routeSheet.getDriverTabelNumber().equals(routeSheet.getConductorTabelNumber());

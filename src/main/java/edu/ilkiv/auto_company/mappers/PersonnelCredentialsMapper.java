@@ -19,8 +19,7 @@ public class PersonnelCredentialsMapper implements EntityMapper<PersonnelCredent
         credentials.setPosition(dto.getPosition());
         credentials.setDateOfEmployment(dto.getDateOfEmployment());
 
-        // Зв'язок з PersonalData повинен встановлюватись в сервісному шарі
-
+        // PersonalData встановлюється в сервісі
         return credentials;
     }
 
